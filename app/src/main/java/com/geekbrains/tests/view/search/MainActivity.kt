@@ -27,7 +27,14 @@ class MainActivity : AppCompatActivity(), ViewSearchContract {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setUI()
+        presenter.onAttach(this)
     }
+
+    override fun onDestroy() {
+        presenter.onDetach()
+        super.onDestroy()
+    }
+
 
     private fun setUI() {
         toDetailsActivityButton.setOnClickListener {
