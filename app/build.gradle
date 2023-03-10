@@ -24,15 +24,29 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = '11'
+        jvmTarget = '1.8'
     }
     testOptions {
         unitTests {
             includeAndroidResources = true
+        }
+    }
+
+    flavorDimensions "default"
+    productFlavors {
+        fake {
+            applicationIdSuffix ".fake"
+            versionNameSuffix "-fake"
+            buildConfigField "String", "TYPE", '"FAKE"'
+        }
+        real {
+            applicationIdSuffix ".real"
+            versionNameSuffix "-real"
+            buildConfigField "String", "TYPE", '"REAL"'
         }
     }
 }
@@ -46,24 +60,23 @@ dependencies {
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
-    //Test
+    //Test core
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     //Mockito
-    testImplementation 'org.mockito:mockito-core:5.1.1'
-    testImplementation 'org.mockito:mockito-inline:5.1.1'
+    testImplementation 'org.mockito:mockito-core:5.2.0'
+    testImplementation 'org.mockito:mockito-inline:5.2.0'
     testImplementation('com.nhaarman:mockito-kotlin:1.6.0') {
         exclude group: 'org.jetbrains.kotlin'
         exclude group: 'org.mockito'
     }
     //Robolectric
-    testImplementation 'org.robolectric:robolectric:4.5.1'
+    testImplementation 'org.robolectric:robolectric:4.9.2'
     testImplementation 'androidx.test:core:1.5.0'
     testImplementation 'androidx.test:runner:1.5.2'
     testImplementation 'androidx.test.ext:junit:1.1.5'
     testImplementation 'androidx.test.ext:truth:1.5.0'
     testImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     testImplementation 'androidx.test.espresso:espresso-intents:3.5.1'
-
 }
