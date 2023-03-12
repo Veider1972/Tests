@@ -36,6 +36,11 @@ class MainActivity : AppCompatActivity(), ViewSearchContract {
         toDetailsActivityButton.setOnClickListener {
             startActivity(DetailsActivity.getIntent(this, totalCount))
         }
+        searchButton.setOnClickListener {
+            if (searchEditText.text.toString().isNotEmpty()){
+                presenter.searchGitHub(searchEditText.text.toString())
+            }
+        }
         setQueryListener()
         setRecyclerView()
     }

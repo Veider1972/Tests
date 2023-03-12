@@ -28,12 +28,18 @@ class MainActivity : AppCompatActivity(), ViewSearchContract {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        presenter.onAttach(this)
         setUI()
     }
 
     private fun setUI() {
         toDetailsActivityButton.setOnClickListener {
             startActivity(DetailsActivity.getIntent(this, totalCount))
+        }
+        searchButton.setOnClickListener {
+            if (searchEditText.text.toString().isNotEmpty()){
+                presenter.searchGitHub(searchEditText.text.toString())
+            }
         }
         setQueryListener()
         setRecyclerView()
@@ -64,7 +70,9 @@ class MainActivity : AppCompatActivity(), ViewSearchContract {
         })
     }
 
-    private fun createRepository(): RepositoryContract = GitHubRepository(createRetrofit().create(GitHubApi::class.java))
+    private fun createRepository(): RepositoryContract {
+        return GitHubRepository(createRetrofit().create(GitHubApi::class.java))
+    }
 
     private fun createRetrofit(): Retrofit {
         return Retrofit.Builder()
